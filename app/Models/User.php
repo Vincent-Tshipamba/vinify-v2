@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Str;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
@@ -21,8 +23,12 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'password',
         'workos_id',
         'avatar',
+        'profile_picture',
+        'is_active',
+        'university_id',
     ];
 
     /**
@@ -57,5 +63,30 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public function university(): BelongsTo
+    {
+        return $this->belongsTo(University::class);
+    }
+
+    public function documents(): HasMany
+    {
+        return $this->hasMany(Document::class);
+    }
+
+    public function analysisRequests(): HasMany
+    {
+        return $this->hasMany(AnalysisRequest::class);
+    }
+
+    public function approvedAnalysisRequests(): HasMany
+    {
+        return $this->hasMany(AnalysisRequest::class, 'approved_by');
+    }
+
+    public function analyses(): HasMany
+    {
+        return $this->hasMany(TextAnalysis::class);
     }
 }
