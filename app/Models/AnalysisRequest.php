@@ -17,11 +17,13 @@ class AnalysisRequest extends Model
         'approved_at',
         'rejection_reason',
         'submitted_at',
+        'additional_infos',
     ];
 
     protected $casts = [
         'approved_at' => 'datetime',
         'submitted_at' => 'datetime',
+        'additional_infos' => 'array',
     ];
 
     public function user(): BelongsTo
