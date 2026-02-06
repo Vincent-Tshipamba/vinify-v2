@@ -24,7 +24,6 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'workos_id',
         'avatar',
         'profile_picture',
         'is_active',
@@ -37,7 +36,7 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $hidden = [
-        'workos_id',
+        'password',
         'remember_token',
     ];
 

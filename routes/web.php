@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\User;
-use App\Models\TextAnalysis;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\DocumentController;
@@ -9,26 +7,17 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\TextAnalysisController;
 use App\Http\Controllers\RolePermissionController;
-use Laravel\WorkOS\Http\Middleware\ValidateSessionWithWorkOS;
-
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Route::middleware([
     'auth',
-    ValidateSessionWithWorkOS::class,
 ])->group(function () {
     Route::view('dashboard', 'dashboard')->name('dashboard');
 });
 
 Route::middleware('userOnline')->group(function () {
-    Route::get('/', function () {
-        $nbrAnalyses = TextAnalysis::count();
-        $nbrUsers = User::count();
+    Route::livewire('/', 'pages::client.index')->name('home');
 
-        return view('welcome', compact('nbrAnalyses', 'nbrUsers'));
-    })->name('home');
+    // Public page for students to request an analysis (single-file Livewire component)
+    Route::livewire('/demander-analyse', 'pages::client.request-analysis')->name('analysis.request');
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
 
