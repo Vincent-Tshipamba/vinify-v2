@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->longText('content')->nullable();
             $table->string('file_url')->nullable();
-            $table->string('file_original_extension')->nullable()->after('file_url');
+            $table->string('file_original_extension')->nullable();
             $table->boolean('has_been_analyzed')->default(false);
             $table->string('file_hash')->nullable();
             $table->foreignIdFor(User::class)->constrained()->noActionOnDelete()->noActionOnUpdate();

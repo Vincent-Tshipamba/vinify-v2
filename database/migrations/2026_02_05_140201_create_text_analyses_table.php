@@ -21,7 +21,7 @@ return new class extends Migration
             $table->json('similarities')->nullable();
             $table->boolean('is_ai_generated')->default(false);
             $table->float('plagiarism_percentage')->default(0);
-            $table->float('ai_generated_probability')->nullable()->after('plagiarism_percentage');
+            $table->float('ai_generated_probability')->nullable();
             $table->string('status')->default('pending');
             $table->text('error_message')->nullable();
             $table->timestamps();
