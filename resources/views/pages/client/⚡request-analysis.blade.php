@@ -139,7 +139,7 @@ new class extends Component {
             $mail->Host = 'smtp.gmail.com';
             $mail->SMTPAuth = true;
             $mail->Username = 'tshipambalubobo80@gmail.com';
-            $mail->Password = 'mpyf megq ubai zmeo';
+            $mail->Password = env('MAIL_APP_PASSWORD');
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
             $mail->Port = 587;
 
