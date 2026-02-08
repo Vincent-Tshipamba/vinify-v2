@@ -41,7 +41,12 @@ new class extends Component {
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'phone' => 'required|string|max:30',
+            'phone' => [
+                'required',
+                'string',
+                'size:9',
+                'regex:/^([89][0-9]{8})$/',
+            ],
             'university_name' => 'nullable|string|max:255',
             'subject' => 'required|string|max:255',
             'document' => 'required|file|mimes:pdf,docx|max:10240',
@@ -196,7 +201,7 @@ new class extends Component {
 
                         <div>
                             <label for="email" class="text-neutral-300 text-sm">Email</label>
-                            <input id="email" wire:model.defer="email" type="email" required
+                            <input id="email" inputmode="email" wire:model.defer="email" type="email" required
                                 class="bg-neutral-800 mt-1 p-3 rounded-lg w-full text-white"
                                 placeholder="exemple@email.com" />
                             @error('email') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
@@ -206,9 +211,9 @@ new class extends Component {
                     <div class="gap-4 grid grid-cols-1 md:grid-cols-2">
                         <div>
                             <label for="phone" class="text-neutral-300 text-sm">Numéro de téléphone</label>
-                            <input id="phone" wire:model.defer="phone" type="text" required
+                            <input id="phone" inputmode="numeric" wire:model.defer="phone" type="text" required maxlength="9"
                                 class="bg-neutral-800 mt-1 p-3 rounded-lg w-full text-white"
-                                placeholder="+243 99 000 0000" />
+                                pattern="^([89][0-9]{8})$" placeholder="99 000 0000" />
                             @error('phone') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
                         </div>
 
@@ -240,8 +245,8 @@ new class extends Component {
                             x-on:livewire-upload-finish="isUploading = false; progress = 0"
                             x-on:livewire-upload-error="isUploading = false"
                             x-on:livewire-upload-progress="progress = $event.detail.progress">
-                            <label for="document" class="text-neutral-300 text-sm">Document à analyser</label>
-                            <input id="document" wire:model="document" type="file" accept=".pdf,.docx" required
+                            <label for="document-input" class="text-neutral-300 text-sm">Document à analyser</label>
+                            <input id="document-input" wire:model="document" type="file" accept=".pdf,.docx" required
                                 class="bg-neutral-800 mt-1 p-3 rounded-lg w-full text-neutral-300 text-sm" />
                             <p class="mt-1 text-neutral-500 text-xs">Formats acceptés : PDF, DOCX (max 10 Mo).</p>
                             @error('document') <span class="text-red-400 text-xs">{{ $message }}</span> @enderror
