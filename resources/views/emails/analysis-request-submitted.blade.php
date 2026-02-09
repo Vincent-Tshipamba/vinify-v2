@@ -9,7 +9,7 @@
             <li><strong>Email:</strong> {{ $email }}</li>
             <li><strong>Téléphone:</strong> {{ $phone }}</li>
             <li><strong>Université:</strong> {{ $university ?: 'Non renseigné' }}</li>
-            <li><strong>Sujet:</strong> {{ $subject }}</li>
+            <li><strong>Sujet:</strong> {{ $file_subject }}</li>
             <li><strong>Fichier:</strong> {{ $originalFilename }}</li>
         </ul>
 

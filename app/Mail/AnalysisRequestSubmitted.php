@@ -15,7 +15,7 @@ class AnalysisRequestSubmitted extends Mailable
         public string $email,
         public string $phone,
         public string $university,
-        public string $subject,
+        public string $file_subject,
         public string $originalFilename
     ) {
     }

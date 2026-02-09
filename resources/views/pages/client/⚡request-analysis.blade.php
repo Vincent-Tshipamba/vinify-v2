@@ -10,8 +10,7 @@ use App\Models\TextAnalysis;
 use Livewire\WithFileUploads;
 use App\Models\AnalysisRequest;
 use Illuminate\Support\Facades\Hash;
-use PHPMailer\PHPMailer\Exception;
-use PHPMailer\PHPMailer\PHPMailer;
+use App\Jobs\SendAnalysisRequestEmail;
 
 new class extends Component {
     use WithFileUploads;
@@ -137,33 +136,19 @@ new class extends Component {
             'status' => 'pending',
         ]);
 
-        $mail = new PHPMailer(true);
-
         try {
-            $mail->isSMTP();
-            $mail->Host = 'smtp.gmail.com';
-            $mail->SMTPAuth = true;
-            $mail->Username = 'tshipambalubobo80@gmail.com';
-            $mail->Password = env('MAIL_APP_PASSWORD');
-            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
-            $mail->Port = 587;
+            // Dispatch email sending job asynchronously
+            SendAnalysisRequestEmail::dispatch(
+                name: $this->name,
+                email: $this->email,
+                phone: $this->phone,
+                university: $this->university_name,
+                file_subject: $this->subject,
+                originalFilename: $originalName
+            );
 
-            $mail->setFrom('tshipambalubobo80@gmail.com', 'Vincent Tshipamba');
-            $mail->addAddress($this->email);
-            $mail->isHTML(true);
-            $mail->Subject = 'Confirmation de réception de votre demande';
-            $mail->Body = view('emails.analysis-request-submitted', [
-                'name' => $this->name,
-                'email' => $this->email,
-                'originalFilename' => $this->subject,
-                'phone' => $this->phone,
-                'university' => $this->university_name,
-                'subject' => $this->subject,
-            ])->render();
-
-            $mail->send();
-        } catch (Exception $e) {
-            Log::info($e->getMessage());
+        } catch (\Throwable $th) {
+            Log::info($th->getMessage());
         }
 
         session()->flash('success', 'Votre demande a bien été enregistrée. Nous vous contacterons bientôt.');
