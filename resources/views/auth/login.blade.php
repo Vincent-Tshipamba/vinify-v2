@@ -1,38 +1,35 @@
 <x-layouts::auth.simple :title="__('Log in')">
     <div class="flex flex-col gap-2 text-center">
-        <h1 class="text-2xl font-semibold text-neutral-900 dark:text-white">{{ __('Se connecter') }}</h1>
-        <p class="text-sm text-neutral-600 dark:text-neutral-400">{{ __('AccÃ©dez Ã  votre compte') }}</p>
+        <h1 class="font-semibold text-neutral-900 dark:text-white text-2xl">{{ __('Se connecter') }}</h1>
+        <p class="text-neutral-600 dark:text-neutral-400 text-sm">{{ __('Accédez à votre compte') }}</p>
     </div>
 
     <form method="POST" action="{{ route('login') }}" class="space-y-4">
         @csrf
 
         <div>
-            <label class="text-sm text-neutral-700 dark:text-neutral-300">{{ __('Email') }}</label>
+            <label class="text-neutral-700 dark:text-neutral-300 text-sm">{{ __('Email') }}</label>
             <input name="email" type="email" value="{{ old('email') }}" required autofocus
-                class="mt-1 w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-neutral-400 focus:outline-none dark:border-neutral-800 dark:bg-neutral-900 dark:text-white" />
-            @error('email') <div class="mt-1 text-xs text-red-500">{{ $message }}</div> @enderror
+                class="bg-white dark:bg-neutral-900 mt-1 px-3 py-2 border border-neutral-200 focus:border-neutral-400 dark:border-neutral-800 rounded-lg focus:outline-none w-full text-neutral-900 dark:text-white text-sm" />
+            @error('email') <div class="mt-1 text-red-500 text-xs">{{ $message }}</div> @enderror
         </div>
 
         <div>
-            <label class="text-sm text-neutral-700 dark:text-neutral-300">{{ __('Mot de passe') }}</label>
+            <label class="text-neutral-700 dark:text-neutral-300 text-sm">{{ __('Mot de passe') }}</label>
             <input name="password" type="password" required
-                class="mt-1 w-full rounded-lg border border-neutral-200 bg-white px-3 py-2 text-sm text-neutral-900 focus:border-neutral-400 focus:outline-none dark:border-neutral-800 dark:bg-neutral-900 dark:text-white" />
-            @error('password') <div class="mt-1 text-xs text-red-500">{{ $message }}</div> @enderror
+                class="bg-white dark:bg-neutral-900 mt-1 px-3 py-2 border border-neutral-200 focus:border-neutral-400 dark:border-neutral-800 rounded-lg focus:outline-none w-full text-neutral-900 dark:text-white text-sm" />
+            @error('password') <div class="mt-1 text-red-500 text-xs">{{ $message }}</div> @enderror
         </div>
 
-        <div class="flex items-center justify-between text-sm">
+        <div class="flex justify-between items-center text-sm">
             <label class="inline-flex items-center gap-2 text-neutral-600 dark:text-neutral-400">
-                <input type="checkbox" name="remember" class="rounded border-neutral-300 dark:border-neutral-700" />
+                <input type="checkbox" name="remember" class="border-neutral-300 dark:border-neutral-700 rounded" />
                 {{ __('Se souvenir de moi') }}
             </label>
-            <a href="{{ route('register') }}" class="text-neutral-800 underline dark:text-neutral-200">
-                {{ __('CrÃ©er un compte') }}
-            </a>
         </div>
 
         <button type="submit"
-            class="w-full rounded-lg bg-neutral-900 px-4 py-2 text-sm font-medium text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-900">
+            class="bg-neutral-900 hover:bg-neutral-800 dark:bg-white px-4 py-2 rounded-lg w-full font-medium text-white dark:text-neutral-900 text-sm">
             {{ __('Connexion') }}
         </button>
     </form>
