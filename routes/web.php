@@ -1,27 +1,26 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\UniversityController;
-use App\Http\Controllers\TextAnalysisController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\RolePermissionController;
-Route::middleware([
-    'auth',
-])->group(function () {
-    Route::view('dashboard', 'dashboard')->name('dashboard');
-});
+use App\Http\Controllers\TextAnalysisController;
+use App\Http\Controllers\UniversityController;
+use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Route;
+
+Route::livewire('/', 'pages::client.index')->name('home');
 
 Route::middleware('userOnline')->group(function () {
-    Route::livewire('/', 'pages::client.index')->name('home');
-
     // Public page for students to request an analysis (single-file Livewire component)
     Route::livewire('/demander-analyse', 'pages::client.request-analysis')->name('analysis.request');
 
-    Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
-
     Route::middleware('auth')->group(function () {
+        Route::get('dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+        Route::livewire('/analysis-requests', 'pages::admin.analysis-requests')->name('requests.index');
+
+        Route::livewire('/users', 'pages::admin.users')->name('users.index');
+
         Route::get('/subscription', [UniversityController::class, 'index'])->name('subscription.index');
 
         Route::post('/universities', [UniversityController::class, 'store']);
@@ -40,11 +39,13 @@ Route::middleware('userOnline')->group(function () {
 
         Route::post('/upload-text', [TextAnalysisController::class, 'extractText'])->name('analyze.file');
 
-        Route::resource('users', UserController::class);
+        // Route::resource('users', UserController::class);
         Route::get('/admin/roles-permissions', [RolePermissionController::class, 'index'])->name('admin.roles-permissions');
-        Route::get('/users-roles', [RolePermissionController::class, 'getUsersRoles'])->name(name: 'roles.users.index');
+        Route::get('/users-roles', [RolePermissionController::class, 'getUsersRoles'])->name('roles.users.index');
         Route::get('/roles-permissions', [RolePermissionController::class, 'getRolesPermissions'])->name('roles.permissions.index');
         Route::post('/users/roles/update', [RolePermissionController::class, 'updateUserRole'])->name('users.roles.update');
+        Route::put('admin/users/change-status', [UserController::class, 'changeUserStatus'])->name('admin.users.change-status');
+
         Route::post('/roles-permissions/update', [RolePermissionController::class, 'updateRolePermissions'])->name(name: 'roles.permissions.update');
 
         Route::get('/contact', function () {
