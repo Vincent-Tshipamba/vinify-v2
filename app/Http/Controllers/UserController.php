@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Events\UserStatusChanged;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
 use PHPMailer\PHPMailer\Exception;
 use PHPMailer\PHPMailer\PHPMailer;
 use Spatie\Permission\Models\Role;
-use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -22,6 +24,21 @@ class UserController extends Controller
         return view('vinify.users.index', compact('users', 'roles'));
     }
 
+    public function changeUserStatus(Request $request)
+    {
+        $userId = $request->input('userId');
+        $isActive = $request->input('isActive') == 'true' ? true : false;
+        $user = User::find($userId);
+        $user->is_active = $isActive;
+        $user->save();
+
+        broadcast(new UserStatusChanged);
+
+        Log::info("Événement broadcasté : User ID: $userId, Status: $isActive");
+
+        return response()->json(['message' => 'User status updated successfully']);
+    }
+
     public function sendMail($username, $email, $password)
     {
         // Créer une instance de PHPMailer
@@ -33,7 +50,7 @@ class UserController extends Controller
             $mail->Host = 'smtp.gmail.com'; // Serveur SMTP de Gmail
             $mail->SMTPAuth = true; // Activer l'authentification SMTP
             $mail->Username = 'tshipambalubobo80@gmail.com'; // Votre adresse Gmail
-            $mail->Password = "xtry kfmv wqyp wgwt"; // Mot de passe d'application
+            $mail->Password = 'xtry kfmv wqyp wgwt'; // Mot de passe d'application
             $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS; // Sécurisé par STARTTLS
             $mail->Port = 587; // Port TLS
 
@@ -52,15 +69,15 @@ class UserController extends Controller
                 </header>
 
                 <main style="margin-top: 1rem;">
-                    <h2 style="margin-top: 1rem; color: #4a5568;">Bonjour ' . $username . '🤗</h2>
+                    <h2 style="margin-top: 1rem; color: #4a5568;">Bonjour '.$username.'🤗</h2>
 
                     <p style="margin-top: 0.5rem; text-align: justify; line-height: 1.75; color: #4a5568; ">
                         Félicitations ! Vous êtes maintenant un administrateur sur notre plateforme de gestion. Vous pouvez vous connecter à votre compte en utilisant les informations suivantes :
                     </p>
 
                     <p style="margin-top: 0.5rem; line-height: 1.75; color: #4a5568;">
-                        <span style="font-weight: 700;">Nom d\'utilisateur : </span> ' . $username . '<br>
-                        <span style="font-weight: 700;">Mot de passe : </span> ' . $password . '<br>
+                        <span style="font-weight: 700;">Nom d\'utilisateur : </span> '.$username.'<br>
+                        <span style="font-weight: 700;">Mot de passe : </span> '.$password.'<br>
                         <span style="font-weight: 700;">URL de connexion : </span> <a href="http://127.0.0.1:8000/login" style="text-decoration: underline; color: #3182ce;">Se connecter</a>
                     </p>
 
@@ -76,10 +93,10 @@ class UserController extends Controller
 
                 <footer style="margin-top: 2rem; text-align: center;">
                     <p style="margin-top: 1.5rem; color: #6b7280">
-                        Ce courriel a été envoyé à <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank">' . $email . '</a>.
+                        Ce courriel a été envoyé à <a href="#" class="text-blue-600 dark:text-blue-400 hover:underline" target="_blank">'.$email.'</a>.
                         Si vous préférez ne pas recevoir ce type d\'e-mail, vous pouvez <a href="#" style="color: #1c64f2; ">gérer vos préférences en matière d\'e-mail.</a>.
                     </p>
-                    <p style="margin-top: 0.75rem; color: #6b7280">© ' . date('Y') . ' Vinify. Tous les droits sont réservés.</p>
+                    <p style="margin-top: 0.75rem; color: #6b7280">© '.date('Y').' Vinify. Tous les droits sont réservés.</p>
                 </footer>
             </section>
             ';
@@ -97,7 +114,7 @@ class UserController extends Controller
             [
                 'name' => 'required|string|max:255',
                 'email' => 'required|string|email|max:255|unique:users',
-                'password' => 'required|string|min:8'
+                'password' => 'required|string|min:8',
             ],
             [
                 'name.required' => 'Veuillez saisir un nom d\'utilisateur.',
@@ -117,15 +134,17 @@ class UserController extends Controller
             if ($request->input('mail')) {
                 try {
                     $this->sendMail($validatedData['name'], $validatedData['email'], $validatedData['password']);
-                    return back()->with('success', 'L\'utilisateur a été créé avec succès ! Un email a été envoyé à ' . $validatedData['name'] . ' avec les détails du compte.');
+
+                    return back()->with('success', 'L\'utilisateur a été créé avec succès ! Un email a été envoyé à '.$validatedData['name'].' avec les détails du compte.');
                 } catch (\Throwable $th) {
                     return back()->with('error', $th->getMessage());
                 }
             }
+
             // Retourner une réponse de succès
             return back()->with('success', 'Utilisateur créé avec succès et rôle attribué.');
         } catch (\Throwable $th) {
-            return back()->with('error', 'Une erreur s\'est produite lors de la création de l\'utilisateur: ' . $th->getMessage());
+            return back()->with('error', 'Une erreur s\'est produite lors de la création de l\'utilisateur: '.$th->getMessage());
         }
     }
 }
