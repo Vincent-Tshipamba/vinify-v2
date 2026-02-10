@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Document;
 use App\Models\TextAnalysis;
-use Illuminate\Http\Request;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
