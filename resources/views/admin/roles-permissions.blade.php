@@ -2,10 +2,10 @@
 
 <x-app-layout>
     <!--breadcrumb-->
-    <div class="page-breadcrumb flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6 gap-y-4">
+    <div class="flex sm:flex-row flex-col sm:justify-between sm:items-center gap-y-4 mb-6 page-breadcrumb">
         <!-- Breadcrumb -->
         <nav
-            class="flex items-center gap-x-2 text-sm text-gray-500 dark:text-gray-400 bg-white/10 dark:bg-neutral-800/50 backdrop-blur-md px-6 py-3 rounded-xl shadow-sm">
+            class="flex items-center gap-x-2 bg-white/10 dark:bg-neutral-800/50 shadow-sm backdrop-blur-md px-6 py-3 rounded-xl text-gray-500 dark:text-gray-400 text-sm">
             <a href="{{ route('dashboard') }}"
                 class="inline-flex items-center gap-x-1 font-medium hover:text-gray-700 dark:hover:text-white">
                 <svg class="w-5 h-5 text-current" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
@@ -54,37 +54,37 @@
     </div>
     <!--end breadcrumb-->
 
-    <h6 class="mb-4 text-gray-700 dark:text-gray-300 text-sm px-1 sm:px-3 mb-6">
+    <h6 class="mb-4 mb-6 px-1 sm:px-3 text-gray-700 dark:text-gray-300 text-sm">
         Consultez la liste de tous les utilisateurs enregistrés
     </h6>
 
 
     @if (session('success'))
-        <div class="bg-green-500 text-white p-4 rounded mb-4">
+        <div class="bg-green-500 mb-4 p-4 rounded text-white">
             {{ session('success') }}
         </div>
     @endif
 
-    <div class="flex flex-wrap">
-        <div class="border-e border-gray-200 dark:border-neutral-700 dark:bg-neutral-800 p-3">
+    <div class="flex flex-wrap w-full">
+        <div class="dark:bg-neutral-800 p-3 border-e border-gray-200 dark:border-neutral-700">
             <nav class="flex flex-col space-y-2" aria-label="Tabs" role="tablist" aria-orientation="horizontal"
                 data-hs-tabs='{
                     "eventType": "click"
                 }'>
                 <button type="button"
-                    class="hs-tab-active:border-blue-500 hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500 active"
+                    class="inline-flex items-center gap-x-2 disabled:opacity-50 py-1 pe-4 border-e-2 border-transparent hs-tab-active:border-blue-500 focus:outline-hidden text-gray-500 hover:text-blue-600 focus:text-blue-600 hs-tab-active:text-blue-600 dark:hover:text-blue-500 dark:hs-tab-active:text-blue-600 dark:text-neutral-400 text-sm whitespace-nowrap disabled:pointer-events-none active"
                     id="open-on-hover-tab-item-1" aria-selected="true" data-hs-tab="#open-on-hover-tab-1"
                     aria-controls="open-on-hover-tab-1" role="tab">
                     Utilisateurs
                 </button>
                 <button type="button"
-                    class="hs-tab-active:border-blue-500 hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500"
+                    class="inline-flex items-center gap-x-2 disabled:opacity-50 py-1 pe-4 border-e-2 border-transparent hs-tab-active:border-blue-500 focus:outline-hidden text-gray-500 hover:text-blue-600 focus:text-blue-600 hs-tab-active:text-blue-600 dark:hover:text-blue-500 dark:hs-tab-active:text-blue-600 dark:text-neutral-400 text-sm whitespace-nowrap disabled:pointer-events-none"
                     id="open-on-hover-tab-item-2" aria-selected="false" data-hs-tab="#open-on-hover-tab-2"
                     aria-controls="open-on-hover-tab-2" role="tab">
                     Attribuer un rôle
                 </button>
                 <button type="button"
-                    class="hs-tab-active:border-blue-500 hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 py-1 pe-4 inline-flex items-center gap-x-2 border-e-2 border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 focus:outline-hidden focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:text-neutral-400 dark:hover:text-blue-500"
+                    class="inline-flex items-center gap-x-2 disabled:opacity-50 py-1 pe-4 border-e-2 border-transparent hs-tab-active:border-blue-500 focus:outline-hidden text-gray-500 hover:text-blue-600 focus:text-blue-600 hs-tab-active:text-blue-600 dark:hover:text-blue-500 dark:hs-tab-active:text-blue-600 dark:text-neutral-400 text-sm whitespace-nowrap disabled:pointer-events-none"
                     id="open-on-hover-tab-item-3" aria-selected="false" data-hs-tab="#open-on-hover-tab-3"
                     aria-controls="open-on-hover-tab-3" role="tab">
                     Rôles et Permissions
@@ -92,14 +92,14 @@
             </nav>
         </div>
 
-        <div class="ms-6">
+        <div class="flex-1 ms-6 w-full">
             <div id="open-on-hover-tab-1 w-full" role="tabpanel" aria-labelledby="open-on-hover-tab-item-1">
                 <x-users-table :users="$users" :roles="$roles"></x-users-table>
             </div>
-            <div id="open-on-hover-tab-2" class="hidden" role="tabpanel" aria-labelledby="open-on-hover-tab-item-2">
+            <div id="open-on-hover-tab-2" class="hidden w-full" role="tabpanel" aria-labelledby="open-on-hover-tab-item-2">
                 <x-assign-roles-table></x-assign-roles-table>
             </div>
-            <div id="open-on-hover-tab-3" class="hidden" role="tabpanel" aria-labelledby="open-on-hover-tab-item-3">
+            <div id="open-on-hover-tab-3" class="hidden w-full" role="tabpanel" aria-labelledby="open-on-hover-tab-item-3">
                 <x-roles-permissions-table></x-roles-permissions-table>
             </div>
             <div id="open-on-hover-tab-4" class="hidden" role="tabpanel" aria-labelledby="open-on-hover-tab-item-4">
@@ -198,7 +198,7 @@
                     searchable: true,
                     sortable: true,
                     template: (options, dom) => "<div class='" + options.classes.top + "'>" +
-                        "<div class='flex flex-col sm:flex-row sm:items-center space-y-4 sm:space-y-0 sm:space-x-3 rtl:space-x-reverse w-full sm:w-auto'>" +
+                        "<div class='flex sm:flex-row flex-col sm:items-center rtl:space-x-reverse sm:space-x-3 space-y-4 sm:space-y-0 w-full sm:w-auto'>" +
                         (options.paging && options.perPageSelect ?
                             "<div class='" + options.classes.dropdown + "'>" +
                             "<label>" +
@@ -206,41 +206,41 @@
                             "</label>" +
                             "</div>" : ""
                         ) +
-                        "<button id='exportDropdownButton' data-dropdown-toggle='exportDropdown' type='button' class='flex w-full items-center justify-center rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-900 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:outline-none focus:ring-4 focus:ring-gray-100 dark:border-gray-600 dark:bg-gray-800 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white dark:focus:ring-gray-700 sm:w-auto'>" +
+                        "<button id='exportDropdownButton' data-dropdown-toggle='exportDropdown' type='button' class='focus:z-10 flex justify-center items-center bg-white hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 px-3 py-2 border border-gray-200 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 w-full sm:w-auto font-medium text-gray-900 hover:text-primary-700 dark:hover:text-white dark:text-gray-400 text-sm'>" +
                         "Export as" +
-                        "<svg class='-me-0.5 ms-1.5 h-4 w-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'>" +
+                        "<svg class='ms-1.5 -me-0.5 w-4 h-4' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='none' viewBox='0 0 24 24'>" +
                         "<path stroke='currentColor' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m19 9-7 7-7-7' />" +
                         "</svg>" +
                         "</button>" +
-                        "<div id='exportDropdown' class='z-10 hidden w-52 divide-y divide-gray-100 rounded-lg bg-white shadow dark:bg-gray-700' data-popper-placement='bottom'>" +
-                        "<ul class='p-2 text-left text-sm font-medium text-gray-500 dark:text-gray-400' aria-labelledby='exportDropdownButton'>" +
+                        "<div id='exportDropdown' class='hidden z-10 bg-white dark:bg-gray-700 shadow rounded-lg divide-y divide-gray-100 w-52' data-popper-placement='bottom'>" +
+                        "<ul class='p-2 font-medium text-gray-500 dark:text-gray-400 text-sm text-left' aria-labelledby='exportDropdownButton'>" +
                         "<li>" +
-                        "<button id='export-csv' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'>" +
-                        "<svg class='me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'>" +
+                        "<button id='export-csv' class='group inline-flex items-center hover:bg-gray-100 dark:hover:bg-gray-600 px-3 py-2 rounded-md w-full text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400 text-sm'>" +
+                        "<svg class='me-1.5 w-4 h-4 text-gray-400 dark:group-hover:text-white dark:text-gray-400 group-hover:text-gray-900' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'>" +
                         "<path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4a2 2 0 0 0-2 2v7a2 2 0 0 0 2 2 2 2 0 0 0 2 2h12a2 2 0 0 0 2-2 2 2 0 0 0 2-2v-7a2 2 0 0 0-2-2V4a2 2 0 0 0-2-2h-7Zm1.018 8.828a2.34 2.34 0 0 0-2.373 2.13v.008a2.32 2.32 0 0 0 2.06 2.497l.535.059a.993.993 0 0 0 .136.006.272.272 0 0 1 .263.367l-.008.02a.377.377 0 0 1-.018.044.49.49 0 0 1-.078.02 1.689 1.689 0 0 1-.297.021h-1.13a1 1 0 1 0 0 2h1.13c.417 0 .892-.05 1.324-.279.47-.248.78-.648.953-1.134a2.272 2.272 0 0 0-2.115-3.06l-.478-.052a.32.32 0 0 1-.285-.341.34.34 0 0 1 .344-.306l.94.02a1 1 0 1 0 .043-2l-.943-.02h-.003Zm7.933 1.482a1 1 0 1 0-1.902-.62l-.57 1.747-.522-1.726a1 1 0 0 0-1.914.578l1.443 4.773a1 1 0 0 0 1.908.021l1.557-4.773Zm-13.762.88a.647.647 0 0 1 .458-.19h1.018a1 1 0 1 0 0-2H6.647A2.647 2.647 0 0 0 4 13.647v1.706A2.647 2.647 0 0 0 6.647 18h1.018a1 1 0 1 0 0-2H6.647A.647.647 0 0 1 6 15.353v-1.706c0-.172.068-.336.19-.457Z' clip-rule='evenodd'/>" +
                         "</svg>" +
                         "<span>Export CSV</span>" +
                         "</button>" +
                         "</li>" +
                         "<li>" +
-                        "<button id='export-json' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'>" +
-                        "<svg class='me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'>" +
+                        "<button id='export-json' class='group inline-flex items-center hover:bg-gray-100 dark:hover:bg-gray-600 px-3 py-2 rounded-md w-full text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400 text-sm'>" +
+                        "<svg class='me-1.5 w-4 h-4 text-gray-400 dark:group-hover:text-white dark:text-gray-400 group-hover:text-gray-900' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'>" +
                         "<path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7Zm-.293 9.293a1 1 0 0 1 0 1.414L9.414 14l1.293 1.293a1 1 0 0 1-1.414 1.414l-2-2a1 1 0 0 1 0-1.414l2-2a1 1 0 0 1 1.414 0Zm2.586 1.414a1 1 0 0 1 1.414-1.414l2 2a1 1 0 0 1 0 1.414l-2 2a1 1 0 0 1-1.414-1.414L14.586 14l-1.293-1.293Z' clip-rule='evenodd'/>" +
                         "</svg>" +
                         "<span>Export JSON</span>" +
                         "</button>" +
                         "</li>" +
                         "<li>" +
-                        "<button id='export-txt' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'>" +
-                        "<svg class='me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'>" +
+                        "<button id='export-txt' class='group inline-flex items-center hover:bg-gray-100 dark:hover:bg-gray-600 px-3 py-2 rounded-md w-full text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400 text-sm'>" +
+                        "<svg class='me-1.5 w-4 h-4 text-gray-400 dark:group-hover:text-white dark:text-gray-400 group-hover:text-gray-900' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'>" +
                         "<path fill-rule='evenodd' d='M9 2.221V7H4.221a2 2 0 0 1 .365-.5L8.5 2.586A2 2 0 0 1 9 2.22ZM11 2v5a2 2 0 0 1-2 2H4v11a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2h-7ZM8 16a1 1 0 0 1 1-1h6a1 1 0 1 1 0 2H9a1 1 0 0 1-1-1Zm1-5a1 1 0 1 0 0 2h6a1 1 0 1 0 0-2H9Z' clip-rule='evenodd'/>" +
                         "</svg>" +
                         "<span>Export TXT</span>" +
                         "</button>" +
                         "</li>" +
                         "<li>" +
-                        "<button id='export-sql' class='group inline-flex w-full items-center rounded-md px-3 py-2 text-sm text-gray-500 hover:bg-gray-100 hover:text-gray-900 dark:text-gray-400 dark:hover:bg-gray-600 dark:hover:text-white'>" +
-                        "<svg class='me-1.5 h-4 w-4 text-gray-400 group-hover:text-gray-900 dark:text-gray-400 dark:group-hover:text-white' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'>" +
+                        "<button id='export-sql' class='group inline-flex items-center hover:bg-gray-100 dark:hover:bg-gray-600 px-3 py-2 rounded-md w-full text-gray-500 hover:text-gray-900 dark:hover:text-white dark:text-gray-400 text-sm'>" +
+                        "<svg class='me-1.5 w-4 h-4 text-gray-400 dark:group-hover:text-white dark:text-gray-400 group-hover:text-gray-900' aria-hidden='true' xmlns='http://www.w3.org/2000/svg' width='24' height='24' fill='currentColor' viewBox='0 0 24 24'>" +
                         "<path d='M12 7.205c4.418 0 8-1.165 8-2.602C20 3.165 16.418 2 12 2S4 3.165 4 4.603c0 1.437 3.582 2.602 8 2.602ZM12 22c4.963 0 8-1.686 8-2.603v-4.404c-.052.032-.112.06-.165.09a7.75 7.75 0 0 1-.745.387c-.193.088-.394.173-.6.253-.063.024-.124.05-.189.073a18.934 18.934 0 0 1-6.3.998c-2.135.027-4.26-.31-6.3-.998-.065-.024-.126-.05-.189-.073a10.143 10.143 0 0 1-.852-.373 7.75 7.75 0 0 1-.493-.267c-.053-.03-.113-.058-.165-.09v4.404C4 20.315 7.037 22 12 22Zm7.09-13.928a9.91 9.91 0 0 1-.6.253c-.063.025-.124.05-.189.074a18.935 18.935 0 0 1-6.3.998c-2.135.027-4.26-.31-6.3-.998-.065-.024-.126-.05-.189-.074a10.163 10.163 0 0 1-.852-.372 7.816 7.816 0 0 1-.493-.268c-.055-.03-.115-.058-.167-.09V12c0 .917 3.037 2.603 8 2.603s8-1.686 8-2.603V7.596c-.052.031-.112.059-.165.09a7.816 7.816 0 0 1-.745.386Z'/>" +
                         "</svg>" +
                         "<span>Export SQL</span>" +
@@ -298,21 +298,23 @@
             }
 
             if (document.getElementById("rolesTable") && typeof simpleDatatables.DataTable !== 'undefined') {
-                const dataTable = new simpleDatatables.DataTable("#rolesTable", {
-                    searchable: false,
-                    sortable: false,
-                    pagging: false,
-                    perPageSelect: false
-                })
+                // Don't initialize simpleDatatables for dynamic tables
+                // const dataTable = new simpleDatatables.DataTable("#rolesTable", {
+                //     searchable: false,
+                //     sortable: false,
+                //     pagging: false,
+                //     perPageSelect: false
+                // })
             }
 
             if (document.getElementById("usersRolesTable") && typeof simpleDatatables.DataTable !== 'undefined') {
-                const dataTable = new simpleDatatables.DataTable("#usersRolesTable", {
-                    searchable: false,
-                    sortable: false,
-                    pagging: false,
-                    perPageSelect: false
-                })
+                // Don't initialize simpleDatatables for dynamic tables
+                // const dataTable = new simpleDatatables.DataTable("#usersRolesTable", {
+                //     searchable: false,
+                //     sortable: false,
+                //     pagging: false,
+                //     perPageSelect: false
+                // })
             }
         </script>
 
@@ -333,22 +335,22 @@
                     html: `
                 <form id="new-user-form" class="p-4 md:p-5" method="post" action="{{ route('users.store') }}">
                     @csrf
-                    <div class="grid gap-4 mb-4 grid-cols-2 text-left">
-                        <div class="col-span-2 flex items-center">
-                            <label for="name" class="block w-full mb-2 text-sm md:text-base font-medium text-black dark:text-white">Nom d'utilisateur</label>
-                            <input type="text" name="name" id="name" class="border border-gray-300 text-gray-800 text-sm md:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="John Doe" required="">
+                    <div class="gap-4 grid grid-cols-2 mb-4 text-left">
+                        <div class="flex items-center col-span-2">
+                            <label for="name" class="block mb-2 w-full font-medium text-black dark:text-white text-sm md:text-base">Nom d'utilisateur</label>
+                            <input type="text" name="name" id="name" class="block dark:bg-gray-600 p-2.5 border border-gray-300 focus:border-primary-600 dark:border-gray-500 dark:focus:border-primary-500 rounded-lg focus:ring-primary-600 dark:focus:ring-primary-500 w-full text-gray-800 dark:text-white text-sm md:text-base dark:placeholder-gray-400" placeholder="John Doe" required="">
                         </div>
-                        <div class="col-span-2 flex items-center">
-                            <label for="email" class="block w-full mb-2 text-sm md:text-base font-medium text-black dark:text-white">Adresse mail</label>
-                            <input type="email" name="email" id="email" class="border border-gray-300 text-gray-800 text-sm md:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="exemple@exemple.com" required="">
+                        <div class="flex items-center col-span-2">
+                            <label for="email" class="block mb-2 w-full font-medium text-black dark:text-white text-sm md:text-base">Adresse mail</label>
+                            <input type="email" name="email" id="email" class="block dark:bg-gray-600 p-2.5 border border-gray-300 focus:border-primary-600 dark:border-gray-500 dark:focus:border-primary-500 rounded-lg focus:ring-primary-600 dark:focus:ring-primary-500 w-full text-gray-800 dark:text-white text-sm md:text-base dark:placeholder-gray-400" placeholder="exemple@exemple.com" required="">
                         </div>
-                        <div class="col-span-2 flex items-center">
-                            <label for="password" class="block w-full mb-2 text-sm md:text-base font-medium text-black dark:text-white">Mot de passe</label>
-                            <input type="text" name="password" id="password" class="w-full border border-gray-300 text-gray-800 text-sm md:text-base rounded-lg focus:ring-primary-600 focus:border-primary-600 block p-2.5 dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Tapez un mot de passe" required="">
+                        <div class="flex items-center col-span-2">
+                            <label for="password" class="block mb-2 w-full font-medium text-black dark:text-white text-sm md:text-base">Mot de passe</label>
+                            <input type="text" name="password" id="password" class="block dark:bg-gray-600 p-2.5 border border-gray-300 focus:border-primary-600 dark:border-gray-500 dark:focus:border-primary-500 rounded-lg focus:ring-primary-600 dark:focus:ring-primary-500 w-full text-gray-800 dark:text-white text-sm md:text-base dark:placeholder-gray-400" placeholder="Tapez un mot de passe" required="">
                         </div>
                         <div class="flex space-x-3">
-                            <input id="mail" name="mail" type="checkbox" class="md:w-5 md:h-5 w-4 h-4 text-black dark:text-[#e38407] border-gray-300 rounded focus:ring-[#e38407] dark:focus:ring-[#e38407] dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
-                            <label for="mail" class="block text-sm md:text-base font-medium text-black dark:text-white">Notifier par mail</label>
+                            <input id="mail" name="mail" type="checkbox" class="dark:bg-gray-700 border-gray-300 dark:border-gray-600 rounded focus:ring-[#e38407] focus:ring-2 dark:focus:ring-[#e38407] dark:ring-offset-gray-800 w-4 md:w-5 h-4 md:h-5 text-black dark:text-[#e38407]">
+                            <label for="mail" class="block font-medium text-black dark:text-white text-sm md:text-base">Notifier par mail</label>
                         </div>
                     </div>
                 </form>
@@ -579,13 +581,13 @@
                         // Initial rendering of the table
                         users.forEach(function(user) {
                             body +=
-                                '<tr><th class="text-md text-start"><a href="#" class="hover:bg-[#] p-2" data-user-id="' +
+                                '<tr class="hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-700 border-b"><th class="px-6 py-3 text-md text-start"><a href="#" class="hover:text-yellow-500 dark:hover:text-yellow-400" data-user-id="' +
                                 user.id + '" data-user-name="' + user.name + '">' + user.name + '</a></th>';
                             roles.forEach(function(role) {
                                 var checked = userRoles[user.id] && userRoles[user.id].includes(role
                                     .id) ? 'checked' : '';
                                 body +=
-                                    '<td class="text-center"><input type="checkbox" class="user-checkbox" data-role-id="' +
+                                    '<td class="px-6 py-3 text-center"><input type="checkbox" class="w-5 h-5 accent-indigo-500 user-checkbox" data-role-id="' +
                                     role.id + '" data-user-id="' + user.id +
                                     '" ' + checked + '></td>';
                             });
@@ -668,10 +670,10 @@
 
                         // Create the table header with roles
                         var header =
-                            '<tr class="border-b dark:border-gray-700 dark:bg-neutral-800"><th></th>';
+                            '<tr class="bg-gray-100 dark:bg-gray-800 border-gray-300 dark:border-gray-600 border-b-2"><th class="px-6 py-4 text-left">Permission</th>';
                         roles.forEach(function(role) {
                             header +=
-                                '<th class="text-center"><a href="#" class="text-black dark:text-neutral-500 p-2 bg-bg-chart hover:bg-gray-600" data-role-id="' +
+                                '<th class="px-6 py-4 text-center"><a href="#" class="font-semibold text-yellow-500 hover:text-yellow-600 dark:hover:text-yellow-300 dark:text-yellow-400" data-role-id="' +
                                 role.id + '" data-role-name="' + role.name + '">' + role.name + '</a></th>';
                         });
                         header += '</tr>';
@@ -726,8 +728,7 @@
                             var isManageAll = (permission.name === 'gérer tout');
                             var rowClass = isManageAll ? 'manage-all-permission' : '';
 
-                            body += '<tr class="' + rowClass +
-                                '"><th class="text-md text-start"><a href="#" class="hover:bg-custom-dark p-2" data-permission-id="' +
+                            body += '<tr class="hover:bg-gray-100 dark:hover:bg-gray-700 border-gray-200 dark:border-gray-700 border-b ' + rowClass + '"><th class="px-6 py-3 text-md text-start"><a href="#" class="hover:text-yellow-500 dark:hover:text-yellow-400" data-permission-id="' +
                                 permission.id + '" data-permission-name="' + permission.name +
                                 '">' +
                                 permission.name + '</a></th>';
@@ -737,7 +738,7 @@
                                         role.id].includes(permission.id) ? 'checked' :
                                     '';
                                 body +=
-                                    '<td class="text-center"><input type="checkbox" class="permission-checkbox" data-role-id="' +
+                                    '<td class="px-6 py-3 text-center"><input type="checkbox" class="w-5 h-5 accent-indigo-500 permission-checkbox" data-role-id="' +
                                     role.id + '" data-permission-id="' + permission.id +
                                     '" ' + checked + '></td>';
                             });
@@ -759,7 +760,7 @@
 
                             Swal.fire({
                                 title: 'Permission : ' + permissionName,
-                                html: '<input id="permission-name" class="rounded-xl text-gray-800 dark:bg-gray-700 dark:text-gray-200" type="text" value="' +
+                                html: '<input id="permission-name" class="dark:bg-gray-700 rounded-xl text-gray-800 dark:text-gray-200" type="text" value="' +
                                     permissionName + '">',
                                 text: 'Que voulez-vous faire?',
                                 icon: 'question',
@@ -859,7 +860,7 @@
 
                             Swal.fire({
                                 title: 'Role : ' + roleName,
-                                html: '<input id="role-name" type="text" class="rounded-xl text-gray-800 dark:bg-gray-700 dark:text-gray-200" value="' +
+                                html: '<input id="role-name" type="text" class="dark:bg-gray-700 rounded-xl text-gray-800 dark:text-gray-200" value="' +
                                     roleName + '">',
                                 text: 'Que voulez-vous faire?',
                                 icon: 'question',

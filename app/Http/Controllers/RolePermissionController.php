@@ -4,24 +4,24 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use Spatie\Permission\Models\Role;
 use Illuminate\Support\Facades\Artisan;
 use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
 
 class RolePermissionController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function index()
+    {
+        // Récupérer tous les utilisateurs, les rôles et les permissions
+        $users = User::with('roles', 'permissions')->get();
+        $roles = Role::all();
 
-     public function index()
-     {
-         // Récupérer tous les utilisateurs, les rôles et les permissions
-         $users = User::with('roles', 'permissions')->get();
-         $roles = Role::all();
+        return view('admin.roles-permissions', compact('users', 'roles'));
+    }
 
-         return view('admins.roles-permissions', compact('users', 'roles'));
-     }
     public function getRolesPermissions()
     {
         $roles = Role::with('permissions')->get(); // Load roles with their associated permissions
@@ -40,7 +40,7 @@ class RolePermissionController extends Controller
         ]);
     }
 
-        public function getUsersRoles()
+    public function getUsersRoles()
     {
         $users = User::with('roles')->get();
         $roles = Role::all();
@@ -57,14 +57,14 @@ class RolePermissionController extends Controller
         ]);
     }
 
-        public function updateUserRole(Request $request)
+    public function updateUserRole(Request $request)
     {
         $userId = $request->input('user_id');
         $roleId = $request->input('role_id');
         $assign = $request->input('assign');
         $user = User::find($userId);
 
-        if ($assign === "true") {
+        if ($assign === 'true') {
             $user->roles()->attach($roleId);
         } else {
             $user->roles()->detach($roleId);
@@ -95,13 +95,12 @@ class RolePermissionController extends Controller
         return response()->json(['message' => 'Role created successfully!']);
     }
 
-
     public function updateRolePermissions(Request $request)
     {
         $role = Role::find($request->role_id);
         $permission = Permission::find($request->permission_id);
 
-        if (!$role || !$permission) {
+        if (! $role || ! $permission) {
             return response()->json(['message' => 'Role or Permission not found'], 404);
         }
 
@@ -113,7 +112,7 @@ class RolePermissionController extends Controller
                 $allPermissions = Permission::all();
                 $role->syncPermissions($allPermissions);
             } else {
-                if (!$role->hasPermissionTo($permission)) {
+                if (! $role->hasPermissionTo($permission)) {
                     $role->givePermissionTo($permission);
                 }
             }
@@ -134,12 +133,14 @@ class RolePermissionController extends Controller
 
     public function updatePermission(Request $request, Permission $permission)
     {
+
         try {
             $permission->name = $request->input('name');
             $permission->save();
+
             return response()->json(['message' => 'Permission updated successfully']);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error updating permission: ' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error updating permission: '.$e->getMessage()], 500);
         }
     }
 
@@ -147,9 +148,10 @@ class RolePermissionController extends Controller
     {
         try {
             $permission->delete();
+
             return response()->json(['message' => 'Permission deleted successfully']);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error deleting permission: ' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error deleting permission: '.$e->getMessage()], 500);
         }
     }
 
@@ -158,9 +160,10 @@ class RolePermissionController extends Controller
         try {
             $role->name = $request->input('name');
             $role->save();
+
             return response()->json(['message' => 'Role updated successfully']);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error updating role: ' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error updating role: '.$e->getMessage()], 500);
         }
     }
 
@@ -168,9 +171,10 @@ class RolePermissionController extends Controller
     {
         try {
             $role->delete();
+
             return response()->json(['message' => 'Role deleted successfully']);
         } catch (\Exception $e) {
-            return response()->json(['message' => 'Error deleting role: ' . $e->getMessage()], 500);
+            return response()->json(['message' => 'Error deleting role: '.$e->getMessage()], 500);
         }
     }
 }
