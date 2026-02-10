@@ -19,7 +19,7 @@ class UserOnline
     {
         if (Auth::check()) {
             $expiresAt = now()->addMinutes(1);
-            Cache::put('user-is-online-' . Auth::user()->id, true, $expiresAt);
+            Cache::put('user-is-online-'.Auth::user()->id, true, $expiresAt);
         }
 
         return $next($request);
