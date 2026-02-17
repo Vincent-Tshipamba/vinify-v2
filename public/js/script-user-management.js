@@ -1,59 +1,56 @@
-// Global variables for DataTables instances
-let usersTableInstance;
-let rolesTableInstance;
-let usersRolesTableInstance;
+function initializeUserDataTables() {
+    let usersTableElement = document.getElementById('users-table');
+    let rolesTableElement = document.getElementById('rolesTable');
+    let usersRolesTableElement = document.getElementById('usersRolesTable');
+    if (!usersTableElement || !rolesTableElement || !usersRolesTableElement) return;
 
-function initializeDataTables() {
-    if (document.getElementById("users-table")) {
-        if (usersTableInstance) {
-            usersTableInstance.destroy();
-        }
-        usersTableInstance = $('#users-table').DataTable({
-            paging: true,
-            pageLength: 10,
-            lengthChange: false,
-            info: true,
-            autoWidth: false,
-            language: {
-                search: "Rechercher:",
-                paginate: {
-                    next: "Suivant",
-                    previous: "Précédent"
-                },
-                info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées"
-            }
-        });
+    if ($.fn.DataTable.isDataTable('#users-table')) {
+        $('#users-table').DataTable().clear().destroy();
     }
-    if (document.getElementById("rolesTable")) {
-        if (rolesTableInstance) {
-            rolesTableInstance.destroy();
-        }
-        rolesTableInstance = $('#rolesTable').DataTable({
-            paging: false,
-            lengthChange: false,
-            info: false,
-            searching: false,
-            ordering: false,
-            autoWidth: false
-        });
+    if ($.fn.DataTable.isDataTable('#rolesTable')) {
+        $('#rolesTable').DataTable().clear().destroy();
     }
-    if (document.getElementById("usersRolesTable")) {
-        if (usersRolesTableInstance) {
-            usersRolesTableInstance.destroy();
-        }
-        usersRolesTableInstance = $('#usersRolesTable').DataTable({
-            paging: false,
-            lengthChange: false,
-            info: false,
-            searching: false,
-            ordering: false,
-            autoWidth: false
-        });
+    if ($.fn.DataTable.isDataTable('#usersRolesTable')) {
+        $('#usersRolesTable').DataTable().clear().destroy();
     }
+
+    usersTableInstance = $('#users-table').DataTable({
+        paging: true,
+        pageLength: 10,
+        lengthChange: false,
+        info: true,
+        autoWidth: false,
+        language: {
+            search: "Rechercher:",
+            paginate: {
+                next: "Suivant",
+                previous: "Précédent"
+            },
+            info: "Affichage de _START_ à _END_ sur _TOTAL_ entrées"
+        }
+    });
+
+    rolesTableInstance = $('#rolesTable').DataTable({
+        paging: false,
+        lengthChange: false,
+        info: false,
+        searching: false,
+        ordering: false,
+        autoWidth: false
+    });
+
+    usersRolesTableInstance = $('#usersRolesTable').DataTable({
+        paging: false,
+        lengthChange: false,
+        info: false,
+        searching: false,
+        ordering: false,
+        autoWidth: false
+    });
 }
 
 // Initialize DataTables on page load
-initializeDataTables();
+initializeUserDataTables();
 
 $.ajaxSetup({
     headers: {
