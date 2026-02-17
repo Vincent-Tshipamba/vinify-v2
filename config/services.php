@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+    'flask' => [
+        'url' => env('FLASK_PLAGIARISM_URL', 'http://127.0.0.1:5050/check-plagiarism'),
+        'connect_timeout' => env('FLASK_CONNECT_TIMEOUT', 10),
+        'timeout' => env('FLASK_TIMEOUT', 10000),
+    ],
+
 ];
