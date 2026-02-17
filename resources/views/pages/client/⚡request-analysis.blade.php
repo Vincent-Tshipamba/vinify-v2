@@ -5,6 +5,7 @@ use App\Models\Corpus;
 use Livewire\Component;
 use App\Models\Document;
 use App\Models\University;
+use App\Jobs\ExtractDocumentContent;
 use Illuminate\Support\Str;
 use App\Models\TextAnalysis;
 use Livewire\WithFileUploads;
@@ -90,7 +91,7 @@ new class extends Component {
         $originalName = $this->document->getClientOriginalName();
         $extension = strtolower($this->document->getClientOriginalExtension() ?: $this->document->extension());
         $fileHash = hash_file('sha256', $this->document->getRealPath());
-        $filePath = $this->document->store('documents');
+        $filePath = $this->document->store('documents', 'public');
 
         $document = Document::create([
             'name' => $this->subject,
@@ -99,6 +100,8 @@ new class extends Component {
             'file_hash' => $fileHash,
             'user_id' => $user->id,
         ]);
+
+        ExtractDocumentContent::dispatch($document->id);
 
         $globalCorpus = Corpus::firstOrCreate([
             'type' => 'GLOBAL',
