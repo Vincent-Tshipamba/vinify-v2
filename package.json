@@ -12,6 +12,7 @@
         "axios": "^1.7.4",
         "concurrently": "^9.0.1",
         "docx-preview": "^0.3.7",
+        "flowbite": "^4.0.1",
         "jquery": "^4.0.0",
         "laravel-vite-plugin": "^2.0",
         "preline": "^4.0.1",
