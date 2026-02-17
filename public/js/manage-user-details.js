@@ -6,7 +6,7 @@ function showUserProfile(user_id, name, email, created_at, user_last_activity, c
     <section class="w-full p-4 mt-4 border-gray-200 rounded-xl gap-12">
         <div class="bg-white dark:bg-gray-900 shadow-lg dark:shadow-lg dark:shadow-gray-500/20 p-4 mb-4 rounded-lg border dark:border-gray-500 text-center">
             <div class="flex justify-center">
-                <img loading="lazy" src="{{ asset('img/profil.jpeg') }}" alt="" class="w-28 h-28 rounded-full border border-gray-900 dark:border-gray-500 object-cover">
+                <img loading="lazy" src="/img/profil.jpg" alt="" class="w-28 h-28 rounded-full border border-gray-900 dark:border-gray-500 object-cover">
             </div>
             <div class="mb-4">
                 <h2 class="text-4xl mb-2 font-extrabold leading-none tracking-tight text-gray-700 md:text-5xl lg:text-5xl dark:text-white">${name}</h2>
@@ -48,6 +48,19 @@ function showUserProfile(user_id, name, email, created_at, user_last_activity, c
                 </section>
                 `,
         allowOutsideClick: false,
+        theme: 'dark',
+        color: '#ffffff',
+        background: '#000000',
+        showClass: {
+            popup: 'swal2-show',
+            backdrop: 'swal2-backdrop-show',
+            icon: 'swal2-icon-show'
+        },
+        hideClass: {
+            popup: 'swal2-hide',
+            backdrop: 'swal2-backdrop-hide',
+            icon: 'swal2-icon-hide'
+        },
     })
 }
 

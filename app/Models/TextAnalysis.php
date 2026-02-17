@@ -16,12 +16,15 @@ class TextAnalysis extends Model
         'is_ai_generated',
         'plagiarism_percentage',
         'ai_generated_probability',
+        'highlighted_text',
+        'excerpted_text',
         'status',
         'error_message',
     ];
 
     protected $casts = [
         'similarities' => 'array',
+        'excerpted_text' => 'array',
         'is_ai_generated' => 'boolean',
         'plagiarism_percentage' => 'float',
         'ai_generated_probability' => 'float',
