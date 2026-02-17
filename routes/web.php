@@ -3,7 +3,6 @@
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\RolePermissionController;
-use App\Http\Controllers\TextAnalysisController;
 use App\Http\Controllers\UniversityController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -28,19 +27,8 @@ Route::middleware('userOnline')->group(function () {
 
         Route::post('/universities', [UniversityController::class, 'store']);
 
-        Route::post('/plagiarism-check', [TextAnalysisController::class, 'analyzeFile']);
-
-        Route::get('/text-analyses/', [TextAnalysisController::class, 'index'])->name('analyses.index');
-        Route::get('/analyses', [TextAnalysisController::class, 'detectAIText'])->name('ai-detection');
-        Route::get('/analyses/{textAnalyseId}', [TextAnalysisController::class, 'show'])->name('analyses.show');
-        Route::post('/analyses/{textAnalyseId}/delete', [TextAnalysisController::class, 'delete'])->name('analyses.delete');
-
-        Route::post('/analyze-document', [TextAnalysisController::class, 'analyzeDocument']);
-
         Route::get('/documents', [DocumentController::class, 'index'])->name('documents.index');
         Route::get('/documents/{document}', [DocumentController::class, 'show'])->name('documents.show');
-
-        Route::post('/upload-text', [TextAnalysisController::class, 'extractText'])->name('analyze.file');
 
         // Route::resource('users', UserController::class);
         Route::get('/admin/roles-permissions', [RolePermissionController::class, 'index'])->name('admin.roles-permissions');
@@ -50,10 +38,6 @@ Route::middleware('userOnline')->group(function () {
         Route::put('admin/users/change-status', [UserController::class, 'changeUserStatus'])->name('admin.users.change-status');
 
         Route::post('/roles-permissions/update', [RolePermissionController::class, 'updateRolePermissions'])->name(name: 'roles.permissions.update');
-
-        Route::get('/contact', function () {
-            return view('vinify.contact');
-        })->name('contact');
 
         // Roles only
         Route::post('/roles/create', [RolePermissionController::class, 'createRole'])->name('roles.store');
