@@ -19,6 +19,9 @@ Route::middleware('userOnline')->group(function () {
 
         Route::livewire('/analysis-requests', 'pages::admin.analysis-requests')->name('requests.index');
 
+        Route::livewire('/analysis-requests/{analysisRequest}', 'pages::admin.analysis-request-detail')->name('requests.show');
+        Route::livewire('/analysis-requests/{analysisRequest}/progress', 'pages::admin.analysis-request-progress')->name('requests.progress');
+
         Route::livewire('/users', 'pages::admin.users')->name('users.index');
 
         Route::get('/subscription', [UniversityController::class, 'index'])->name('subscription.index');
